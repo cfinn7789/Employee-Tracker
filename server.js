@@ -31,9 +31,17 @@ const db = mysql.createConnection(
         'Add Department',
         'Quit']
       }
-    ]);
-  
-    console.log(`You selected: ${userPrompts.selectedItem}`);
+    ])
+    .then(answer => {
+        answer.input === "View All Employees" ? viewAllEmployees():
+        answer.input === "Add Employee" ? addEmployee():
+        answer.input === "Update Employee Role" ? updateRole():
+        answer.input === "View All Roles" ? viewRole():
+        answer.input === "Add Roles" ? addRole():
+        answer.input === "View All Departments" ? viewDepartment():
+        answer.input === "Add Department" ? addDepartment():
+        null;
+      })
   })();
 
 // To Do: 
