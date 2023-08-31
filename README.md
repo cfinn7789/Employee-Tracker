@@ -5,7 +5,7 @@
 
   ## Walkthrough Demo
 
-  [![Watch the video](./example-image.png)](https://drive.google.com/file/d/1cX47nTTkGUx1SDlPGfoGAOO33t9-NmSq/view)
+  [![Watch the video](./example-image.png)](https://drive.google.com/file/d/1agb-ekjYU7cMj-kEcZW3zlmknf6vs2Rp/view)
 
   ## Table of Contents
   - [Installation](#installation)
