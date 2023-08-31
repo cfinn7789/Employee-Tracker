@@ -34,25 +34,25 @@ console.log('Connected to the employees_db database.');
     .then((answer) => {
       switch (answer.selectedItem) {
         case 'View All Employees':
-          viewAllEmployees();
+          viewAllEmployees(); //Done
           break;
         case 'Add Employee':
-          addEmployee();
+          addEmployee(); //Done
           break;
         case 'Update Employee Role':
-          updateRole();
+          updateRole(); //Done
           break;
         case 'View All Roles':
-          viewRole();
+          viewRole(); //Done
           break;
         case 'Add Roles':
-          addRole();
+          addRole(); //Done
           break;
         case 'View All Departments':
-          viewDepartment();
+          viewDepartment(); //Done
           break;
         case 'Add Department':
-          addDepartment();
+          addDepartment(); 
           break;
         default:
           break;
@@ -144,6 +144,81 @@ function addRole() {
           console.error('Error adding role:', err);
         } else {
           console.log(`Role '${roleTitle}' added successfully.`);
+        }
+      });
+    });
+}
+
+function updateRole() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeName',
+        message: 'Enter the name of the employee you want to update:',
+      },
+      {
+        type: 'input',
+        name: 'newRole',
+        message: 'Enter the new role for the employee:',
+      },
+    ])
+    .then((answers) => {
+      const employeeName = answers.employeeName.trim();
+      const newRole = answers.newRole.trim();
+
+      if (!employeeName || !newRole) {
+        console.error('Employee name and new role cannot be empty.');
+        return;
+      }
+      const updateSql =
+        'UPDATE employee SET role_id = (SELECT id FROM role WHERE title = ?) WHERE CONCAT(first_name, " ", last_name) = ?';
+      const updateValues = [newRole, employeeName];
+
+      db.query(updateSql, updateValues, (err, result) => {
+        if (err) {
+          console.error('Error updating employee role:', err);
+        } else {
+          console.log(`Successfully updated ${employeeName}'s role to ${newRole}.`);
+        }
+      });
+    });
+}
+
+function viewDepartment() {
+  db.query('SELECT * FROM department', (err, results) => {
+    if (err) {
+      console.error('Error retrieving departments:', err);
+      return;
+    }
+    console.table(results);
+  });
+}
+
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter the name of the department you want to add:',
+      },
+    ])
+    .then((answers) => {
+      const departmentName = answers.departmentName.trim();
+
+      if (!departmentName) {
+        console.error('Department name cannot be empty.');
+        return;
+      }
+      const insertSql = 'INSERT INTO department (department_name) VALUES (?)';
+      const insertValues = [departmentName];
+
+      db.query(insertSql, insertValues, (err, result) => {
+        if (err) {
+          console.error('Error adding department:', err);
+        } else {
+          console.log(`Department '${departmentName}' added successfully.`);
         }
       });
     });
