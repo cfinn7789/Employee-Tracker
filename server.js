@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require("console.table");
-
+// Connects to the database
 const db = mysql.createConnection(
     {
       host: 'localhost',
@@ -13,7 +13,7 @@ const db = mysql.createConnection(
   );
 
 console.log('Connected to the employees_db database.');
-
+// Prompts the user when running node in the console
 (async function menuPrompts() {
      await inquirer.prompt([
       {
@@ -31,25 +31,26 @@ console.log('Connected to the employees_db database.');
         'Quit'],
       },
     ])
+    // Calls the functions when an option is selected
     .then((answer) => {
       switch (answer.selectedItem) {
         case 'View All Employees':
-          viewAllEmployees(); //Done
+          viewAllEmployees();
           break;
         case 'Add Employee':
-          addEmployee(); //Done
+          addEmployee();
           break;
         case 'Update Employee Role':
-          updateRole(); //Done
+          updateRole();
           break;
         case 'View All Roles':
-          viewRole(); //Done
+          viewRole();
           break;
         case 'Add Roles':
-          addRole(); //Done
+          addRole();
           break;
         case 'View All Departments':
-          viewDepartment(); //Done
+          viewDepartment();
           break;
         case 'Add Department':
           addDepartment(); 
@@ -59,7 +60,7 @@ console.log('Connected to the employees_db database.');
       }
     }).catch((err) => console.log(err));
 })();
-
+// Displays the employees in the database
 function viewAllEmployees() {
   db.query('SELECT * FROM employee', (err, results) => {
     if (err) {
@@ -69,7 +70,7 @@ function viewAllEmployees() {
     console.table(results);
   });
 }
-
+// Adds an employee to the database
 function addEmployee() {
   inquirer.prompt([
     {
@@ -96,7 +97,7 @@ function addEmployee() {
     });
   });
 }
-
+// Displays the roles in the database
 function viewRole() {
   db.query('SELECT * FROM role', (err, results) => {
     if (err) {
@@ -106,7 +107,7 @@ function viewRole() {
     console.table(results);
   });
 }
-
+// Adds a role to the database
 function addRole() {
   inquirer
     .prompt([
@@ -148,7 +149,7 @@ function addRole() {
       });
     });
 }
-
+// Updates an employee's role
 function updateRole() {
   inquirer
     .prompt([
@@ -184,7 +185,7 @@ function updateRole() {
       });
     });
 }
-
+// Displays the departments in the database
 function viewDepartment() {
   db.query('SELECT * FROM department', (err, results) => {
     if (err) {
@@ -194,7 +195,7 @@ function viewDepartment() {
     console.table(results);
   });
 }
-
+// Adds an apartment to the database
 function addDepartment() {
   inquirer
     .prompt([
